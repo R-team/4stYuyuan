@@ -11,8 +11,8 @@
 #include "sensor.h"
 #include "env_val.h"
 
-#define turn_speed 200
-#define RUN_SPEED 120
+#define turn_speed 225
+#define RUN_SPEED 225
 #define motorBeginWork //驱动电机转动与否
 
 int turn_counter = 0;
@@ -68,7 +68,7 @@ void step1_1(float degree){  // 走向并触碰灯塔，并返回到黑线，找
 
          motor_l_work(-220);
          motor_r_work(-220);
-         
+
         motor_l_work(-150);
         motor_r_work(-150);
 
@@ -77,8 +77,8 @@ void step1_1(float degree){  // 走向并触碰灯塔，并返回到黑线，找
        // if(find_if_beacon_closed())turn_counter++;
         turn_to_absolute_degree(180);
         turn_counter++;
-         
-        
+
+
 }
 
 void step1(){ //找到灯塔并转向并归中找正

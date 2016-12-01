@@ -24,11 +24,43 @@ void sensor_setup(){
         pinMode(headswitchPin1,INPUT_PULLUP);
         pinMode(headswitchPin2,INPUT_PULLUP);
         compass_setup();
+        encoder_setup();
 
 }
 
 /********************************MPU6050******************************************/
-
+long int  encoder_count[4]={0};   //Global Value
+void encoder_setup(){
+        pinMode(ENCODER_LF_A, INPUT); //encoder_count[0] A相
+        pinMode(ENCODER_LB_A, INPUT); //encoder_count[1]
+        pinMode(ENCODER_RF_A, INPUT); //encoder_count[2]
+        pinMode(ENCODER_RB_A, INPUT); //encoder_count[3]
+        pinMode(ENCODER_LF_B, INPUT); //encoder_count[0] B相
+        pinMode(ENCODER_LB_B, INPUT); //encoder_count[1]
+        pinMode(ENCODER_RF_B, INPUT); //encoder_count[2]
+        pinMode(ENCODER_RB_B, INPUT); //encoder_count[3]
+        attachInterrupt(digitalPinToInterrupt(ENCODER_LF_A),encoderCount_lf,CHANGE);
+        attachInterrupt(digitalPinToInterrupt(ENCODER_LB_A),encoderCount_lb,CHANGE);
+        attachInterrupt(digitalPinToInterrupt(ENCODER_RF_A),encoderCount_rf,CHANGE);
+        attachInterrupt(digitalPinToInterrupt(ENCODER_RB_A),encoderCount_rb,CHANGE);
+}
+//  Ratary Encoder count function;
+void encoderCount_lf(){
+        if(digitalRead(ENCODER_LF_A)!=digitalRead(ENCODER_LF_B))encoder_count[0]++;
+        else encoder_count[0]--;
+}
+void encoderCount_lb(){
+        if(digitalRead(ENCODER_LB_A)!=digitalRead(ENCODER_LB_B))encoder_count[1]++;
+        else encoder_count[1]--;
+}
+void encoderCount_rf(){
+        if(digitalRead(ENCODER_RF_A)==digitalRead(ENCODER_RF_B))encoder_count[2]++;
+        else encoder_count[2]--;
+}
+void encoderCount_rb(){
+        if(digitalRead(ENCODER_RB_A)==digitalRead(ENCODER_RB_B))encoder_count[3]++;
+        else encoder_count[3]--;
+}
 /********************************蜂鸣器*******************************************/
 void Tone(int hz,int delay_time,int count){
         for(int i =0; i <count; i++) {

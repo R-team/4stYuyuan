@@ -45,83 +45,49 @@ void setup() {
         EEPROM.put(0,run_counter); //初始化完成，运行计数器加一
         Tone(300,400,1);
         HeadingInit = headingdegrees();
-}
+        motor_l_work(200);
+        motor_r_work(-200);
 
+}
+extern long int encoder_count[4];
 /*****************loop()*****************/
 void loop() {
-    //_seriaL.println(find_if_beacon_closed());
-// find_if_beacon_off_2();
-  // float k = analogRead(flame_a_1) - analogRead(flame_a_5);   //左侧复眼前后
-  // ScreenData[7] = k;
-  // screen_data_display();
-  // delay(50);
-        // for(int i = 0;i < 4;i++){
-        // delay(1000);
-
-          // find_if_beacon_off_2();
-
-        // xunxian_flag = 0;
-        // delay(200);
-        // delay(30);
-        // motor_l_work(200);
-        // motor_r_work(200);
-        // int flaggg;
-        // find_if_beacon_on();
-        // _seriaL.println(flaggg);
-        // delay(500);
-        // flaggg = 0;
-        // _seriaL.println(headingdegrees());
-        // delay(20000);
-        // motor_l_work(-200);
-        // motor_r_work(200);
-        // delay(20000);
-        // }
-        // turn_to_degree(-90);
-        // delay(500);
-        // // Tone(500,50,5);
-        // // // // _seriaL.println("tick");
-        // turn_to_degree(90);
-        // // // // _seriaL.println("tock");
-        // delay(500);
-//         turn_to_absolute_degree(90);
-//         delay(500);
-//         turn_to_absolute_degree(180);
-//         delay(500);
-//         turn_to_absolute_degree(270);
-//         delay(500);
-//         turn_to_absolute_degree(180);
-//         delay(500);
-        // Tone(500,50,5);
-        // find_if_beacon_off_2();
-        // delay(80);
-
-// _seriaL.println(digitalRead(headswitchPin2)&&digitalRead(headswitchPin1));
-
-
-
+  //  putdown();
+  // m_speed();
+  _seriaL.println(encoder_count[2]);
+  //  motor_l_work(150);
+  //  motor_r_work(150);
+  //  delay(3000);
+  //  Tone(600, 300, 1);
+   //
+  //  turn_to_degree(90);
+  //  Tone(500, 30, 4);
+   //
+  //  rise();
+  //  Tone(400, 100, 2);
 /*==================================
 ====================================
 ==============以下是正式代码==========
 ====================================
 ====================================*/
-         remote_check();
-         while(remote_flag){
-           remote_work();
-         }
-         Tone(500,50,3);
-         beacon();
-         Tone(500,50,3);
-        #ifdef Game_pos_left
-          climbing_left();
-        #endif
-
-        #ifdef Game_pos_right
-          climbing_right();
-        #endif
-        // Tone(400,30,8);
-          drop();
-        Tone(400,40,8);
-        while(1){}
+        //  remote_check();
+        //  while(remote_flag){
+        //    remote_work();
+        //  }
+        // //  Tone(500,50,3);
+        //  //beacon();
+        // //  Tone(500,50,3);
+        // #ifdef Game_pos_left
+        //   climbing_left();
+        // #endif
+        //
+        // #ifdef Game_pos_right
+        //   climbing_right();
+        // #endif
+        // // Tone(400,30,8);
+        //   drop();
+        // Tone(400,40,8);
+        // while(1){}
 
 
 }

@@ -10,6 +10,18 @@
 #define IMU_INT_PIN 1 //IMU中断
 
 
+
+/*************** 编码器 *************/
+#define ENCODER_LF_A 0
+#define ENCODER_LF_B 42
+#define ENCODER_LB_A 18
+#define ENCODER_LB_B 44
+#define ENCODER_RF_A 1
+#define ENCODER_RF_B 43
+#define ENCODER_RB_A 19
+#define ENCODER_RB_B 45
+
+
 /**************电机****************/
 #define motor_lf_in1 34
 #define motor_lf_in2 36
