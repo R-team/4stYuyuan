@@ -11,8 +11,6 @@ float Kp[4],Kd[4],Ki[4];
 
 long int pid_timer;
 
-
-
 void motor_speed_cal(float setpoint[4]){
   if(millis() - pid_timer > 80){
     static float speed_err[4],speed_intergal[4],speed_last_err[4];
