@@ -85,8 +85,8 @@ int remote_work(){
         run_offset=0;
       }
 
-      pwm_L=1.5*(run_power-run_offset);
-      pwm_R=1.5*(run_power+run_offset);
+      pwm_L=2*(run_power-run_offset);
+      pwm_R=2*(run_power+run_offset);
       /*   Try 1 END*/
 
       if(abs(pwm_L)>MAXPWM){

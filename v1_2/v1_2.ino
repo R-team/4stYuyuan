@@ -28,7 +28,6 @@ int beacon();
 void climbing_right();
 void climbing_left();
 bool find_if_beacon_closed();
-float tmp; //调试变量
 
 bool env_val;
 /***************** Setup()******************/
@@ -36,11 +35,19 @@ void setup() {
         _seriaL.begin(115200);
         pinMode(envSwitch,INPUT_PULLUP);
         env_val = digitalRead(envSwitch);
-        delay(5);
+        delay(2);
         while(env_val != digitalRead(envSwitch)){
           env_val = digitalRead(envSwitch);
-          delay(5); //防抖
+          delay(2); //防抖
         }
+        delay(2);
+        while(env_val != digitalRead(envSwitch)){
+          env_val = digitalRead(envSwitch);
+          delay(2); //防抖
+        }
+
+        _seriaL.println(env_val);
+
 
 
         EEPROM.get(eeaddress,run_counter); //从EEPROM获取计数信息
@@ -56,16 +63,32 @@ void setup() {
         EEPROM.put(0,run_counter); //初始化完成，运行计数器加一
         Tone(300,400,1);
         HeadingInit = headingdegrees();
-        motor_l_work(200);
-        motor_r_work(-200);
+
 
 }
+
+
+float tmp[4];
 extern long int encoder_count[4];
 /*****************loop()*****************/
 void loop() {
   //  putdown();
+
+  // env_val = digitalRead(envSwitch);
+  // delay(2);
+  // while(env_val != digitalRead(envSwitch)){
+  //   env_val = digitalRead(envSwitch);
+  //   delay(2); //防抖
+  // }
+  // delay(2);
+  // while(env_val != digitalRead(envSwitch)){
+  //   env_val = digitalRead(envSwitch);
+  //   delay(2); //防抖
+  // }
+  //
+  // _seriaL.println(env_val);
   // m_speed();
-  _seriaL.println(encoder_count[2]);
+
   //  motor_l_work(150);
   //  motor_r_work(150);
   //  delay(3000);
@@ -84,20 +107,21 @@ void loop() {
          remote_check();
          while(remote_flag){
            remote_work();
+           motor_speed_cal(tmp);
          }
-         Tone(500,50,3);
-         beacon();
-         Tone(500,50,3);
-
-        if(env_val == __left)
-          climbing_left();
-        else if(env_val == __right)
-          climbing_right();
-
-        // Tone(400,30,8);
-          drop();
-        Tone(400,40,8);
-        while(1){}
+        //  Tone(500,50,3);
+        //  beacon();
+        //  Tone(500,50,3);
+        //
+        // if(env_val == __left)
+        //   climbing_left();
+        // else if(env_val == __right)
+        //   climbing_right();
+        //
+        // // Tone(400,30,8);
+        //   drop();
+        // Tone(400,40,8);
+        // while(1){}
 
 
 }

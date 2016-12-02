@@ -16,20 +16,23 @@ void motor_speed_cal(float setpoint[4]){
     static float speed_err[4],speed_intergal[4],speed_last_err[4];
     for(int i = 0;i<4;i++){
       speed_err[i] = encoder_count[i] - setpoint[i];
-      motor_pwm[i] = Kp[i]*speed_err[i] + Ki[i]*speed_intergal[i] +Kd[i]*(speed_err[i] - speed_last_err[i]);
+      if(abs(speed_err[i] - speed_last_err[i]) < 4000)
+        motor_pwm[i] = Kp[i]*speed_err[i] + Ki[i]*speed_intergal[i] +Kd[i]*(speed_err[i] - speed_last_err[i]);
       if(motor_pwm[i] > 255)motor_pwm[i] = 255;
       else if(motor_pwm[i] < -255)motor_pwm[i] = -255;
       speed_last_err[i] = speed_err[i];
-    }
+
+
 
     #ifdef print_speed
-    _seriaL.print(encoder_count[0]);
+    if(abs(speed_err[i] - speed_last_err[i]) < 4000){
+    _seriaL.print(abs(encoder_count[0]));
     _seriaL.print(",");
-    _seriaL.print(encoder_count[1]);
+    _seriaL.print(abs(encoder_count[1]));
     _seriaL.print(",");
-    _seriaL.print(encoder_count[2]);
+    _seriaL.print(abs(encoder_count[2]));
     _seriaL.print(",");
-    _seriaL.println(encoder_count[3]);
+    _seriaL.println(abs(encoder_count[3]));}
     #endif
 
     for(int i = 0;i<4;i++){
@@ -38,6 +41,8 @@ void motor_speed_cal(float setpoint[4]){
     pid_timer = millis();
   }
 }
+}
+
 
 void motor_work_set(int motor_pwm[4]){
   motor_lf_work(motor_pwm[0]);

@@ -12,11 +12,11 @@
 
 
 /*************** 编码器 *************/
-#define ENCODER_LF_A 0
+#define ENCODER_LF_A 20
 #define ENCODER_LF_B 42
-#define ENCODER_LB_A 18
+#define ENCODER_LB_A 2
 #define ENCODER_LB_B 44
-#define ENCODER_RF_A 1
+#define ENCODER_RF_A 21
 #define ENCODER_RF_B 43
 #define ENCODER_RB_A 19
 #define ENCODER_RB_B 45
@@ -46,7 +46,7 @@
 /************  舵机  ***************/
 #define servo0          8
 #define servo1         9
-#define servo2         10
+// #define servo2         10
 
 /***********火焰传感器**************/
 #define flame_c_1 24 //s0 最低位
@@ -84,7 +84,7 @@
 #define trig1Pin 11   //前超声
 #define echo1Pin 12
 #define trig2Pin 13      //后超声
-#define echo2Pin 3
+#define echo2Pin 10
 
 /****************Extra******************/
 #define tonePin 52 //蜂鸣器
