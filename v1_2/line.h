@@ -4,7 +4,7 @@
 
 
 /****************蓝牙串口号**********/
-#define _seriaL Serial2
+#define _seriaL Serial
 #define _seriaL_compass Serial3 //罗盘对应
 /***************MPU6050************/
 #define IMU_INT_PIN 1 //IMU中断

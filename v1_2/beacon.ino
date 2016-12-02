@@ -77,6 +77,9 @@ void step1_1(float degree){  // 走向并触碰灯塔，并返回到黑线，找
         motor_r_work(-150);
 
         while(!xunxian_change()) {}
+        motor_l_work(255);
+        motor_r_work(255);
+        delay(100);
         motor_stop();
        // if(find_if_beacon_closed())turn_counter++;
         turn_to_absolute_degree(180);
@@ -212,16 +215,19 @@ void step1(){ //找到灯塔并转向并归中找正
 /******************使用flag驱动电机****************************/
   #ifdef motorBeginWork
         if((flag_turn == _turn) &&(flag_zuoyou== _right)) {
-          if(flag_qianhou == _front){
-          motor_l_work(-165);
-          motor_r_work(-165);
-          delay(150);
-          motor_stop();}
-          if(flag_qianhou == _back){
-          motor_l_work(165);
-          motor_r_work(165);
-          delay(150);
-          motor_stop();}
+                int df = Ultrasound_f();
+                int db = Ultrasound_b();
+                if((db - df > 40)&&(df < 50)){
+                  do{motor_l_work(-255);
+                  motor_r_work(-255);
+                  motor_stop();}while(Ultrasound_f() > 1);
+                }
+                else
+                  {motor_l_work(255);
+                  motor_r_work(255);
+                  delay(100);
+                    }
+
                 // //_seriaL.println("prepare to trun right");
                 //turn_to_degree(90);
                 turn_to_absolute_degree(270);
@@ -233,16 +239,18 @@ void step1(){ //找到灯塔并转向并归中找正
 
         }
         else if((flag_turn == _turn) &&(flag_zuoyou== _left)) {
-                if(flag_qianhou == _front){
-                motor_l_work(-165);
-                motor_r_work(-165);
-                delay(150);
-                motor_stop();}
-                if(flag_qianhou == _back){
-                motor_l_work(165);
-                motor_r_work(165);
-                delay(130);
-                motor_stop();}
+          int df = Ultrasound_f();
+          int db = Ultrasound_b();
+          if((db - df > 40)&&(df < 50)){
+            do{motor_l_work(-255);
+            motor_r_work(-255);
+            motor_stop();}while(Ultrasound_f() > 1);
+          }
+          else
+            {motor_l_work(255);
+            motor_r_work(255);
+            delay(100);
+              }
                 // //_seriaL.println("prepare to trun left");
                 //turn_to_degree(-90);
                 turn_to_absolute_degree(90);

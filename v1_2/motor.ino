@@ -12,7 +12,7 @@ float Kp[4],Kd[4],Ki[4];
 long int pid_timer;
 
 void motor_speed_cal(float setpoint[4]){
-  if(millis() - pid_timer > 80){
+  if(millis() - pid_timer > 40){
     static float speed_err[4],speed_intergal[4],speed_last_err[4];
     for(int i = 0;i<4;i++){
       speed_err[i] = encoder_count[i] - setpoint[i];
@@ -20,6 +20,7 @@ void motor_speed_cal(float setpoint[4]){
         motor_pwm[i] = Kp[i]*speed_err[i] + Ki[i]*speed_intergal[i] +Kd[i]*(speed_err[i] - speed_last_err[i]);
       if(motor_pwm[i] > 255)motor_pwm[i] = 255;
       else if(motor_pwm[i] < -255)motor_pwm[i] = -255;
+      
       speed_last_err[i] = speed_err[i];
 
 

@@ -56,7 +56,7 @@ void setup() {
         sensor_setup();
 
         motor_setup();
-         remote_setup();
+        //  remote_setup();
         // screen_setup();
         // _seriaL.println(run_counter);
         run_counter ++;
@@ -73,7 +73,7 @@ extern long int encoder_count[4];
 /*****************loop()*****************/
 void loop() {
   //  putdown();
-
+ _seriaL.println(Ultrasound_b());
   // env_val = digitalRead(envSwitch);
   // delay(2);
   // while(env_val != digitalRead(envSwitch)){
@@ -89,8 +89,9 @@ void loop() {
   // _seriaL.println(env_val);
   // m_speed();
 
-  //  motor_l_work(150);
-  //  motor_r_work(150);
+  //  motor_l_work(200);
+  //  motor_r_work(200);
+  //  motor_speed_cal(tmp);
   //  delay(3000);
   //  Tone(600, 300, 1);
    //
@@ -104,11 +105,11 @@ void loop() {
 ==============以下是正式代码==========
 ====================================
 ====================================*/
-         remote_check();
-         while(remote_flag){
-           remote_work();
-           motor_speed_cal(tmp);
-         }
+        //  remote_check();
+        //  while(remote_flag){
+          //  remote_work();
+        //
+        //  }
         //  Tone(500,50,3);
         //  beacon();
         //  Tone(500,50,3);
