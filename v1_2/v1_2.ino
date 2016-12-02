@@ -9,7 +9,8 @@
 #include <EEPROM.h>
 #include "debug.h"
 
-
+#define __left 1
+#define __right 0
 /*******************各类flag*************/
 bool remote_flag=1;   //标志遥控状态 1为需要遥控，0为停止遥控
 bool car_pos_flag;
@@ -29,9 +30,19 @@ void climbing_left();
 bool find_if_beacon_closed();
 float tmp; //调试变量
 
+bool env_val;
 /***************** Setup()******************/
 void setup() {
         _seriaL.begin(115200);
+        pinMode(envSwitch,INPUT_PULLUP);
+        env_val = digitalRead(envSwitch);
+        delay(5);
+        while(env_val != digitalRead(envSwitch)){
+          env_val = digitalRead(envSwitch);
+          delay(5); //防抖
+        }
+
+
         EEPROM.get(eeaddress,run_counter); //从EEPROM获取计数信息
         eeaddress += sizeof(long int);
 
@@ -70,24 +81,23 @@ void loop() {
 ==============以下是正式代码==========
 ====================================
 ====================================*/
-        //  remote_check();
-        //  while(remote_flag){
-        //    remote_work();
-        //  }
-        // //  Tone(500,50,3);
-        //  //beacon();
-        // //  Tone(500,50,3);
-        // #ifdef Game_pos_left
-        //   climbing_left();
-        // #endif
-        //
-        // #ifdef Game_pos_right
-        //   climbing_right();
-        // #endif
-        // // Tone(400,30,8);
-        //   drop();
-        // Tone(400,40,8);
-        // while(1){}
+         remote_check();
+         while(remote_flag){
+           remote_work();
+         }
+         Tone(500,50,3);
+         beacon();
+         Tone(500,50,3);
+
+        if(env_val == __left)
+          climbing_left();
+        else if(env_val == __right)
+          climbing_right();
+
+        // Tone(400,30,8);
+          drop();
+        Tone(400,40,8);
+        while(1){}
 
 
 }

@@ -9,6 +9,8 @@
 */
 
 
+
+
 /**************决定比赛是左面还是右面***********************/
 #define Game_pos_left
 //#define Game_pos_right

@@ -6,10 +6,14 @@
 #define _far 1
 #define _notturn 0
 #define _turn 1
+
+#define __left 1
+#define __right 0
 #include <Arduino.h>
 #include "line.h"
 #include "sensor.h"
 #include "env_val.h"
+
 
 #define turn_speed 225
 #define RUN_SPEED 225
@@ -83,6 +87,7 @@ void step1_1(float degree){  // 走向并触碰灯塔，并返回到黑线，找
 
 void step1(){ //找到灯塔并转向并归中找正
         int flame_c[7],flame_d[7],flame_c_sum,flame_d_sum;
+        float irlsum,irrsum;
         // float headDegrees = headingdegrees();
         flame_c_sum = 0; flame_d_sum = 0;
         for(int i=2; i<7; i++) {   //去掉最边上两个红外接收器
@@ -103,15 +108,16 @@ void step1(){ //找到灯塔并转向并归中找正
         float j = analogRead(flame_b_4) - analogRead(flame_b_2);   //右侧复眼前后
         float k = analogRead(flame_a_2) - analogRead(flame_a_4);   //左侧复眼前后
 
-        #ifdef Game_pos_left
-        float irlsum = __a_l * analogRead(flame_a_2) + __b_l*analogRead(flame_a_3) + __c_l * analogRead(flame_a_4);
-        float irrsum = __d_l * analogRead(flame_b_2) + __e_l*analogRead(flame_b_3) + __f_l * analogRead(flame_b_4);
-        #endif
 
-        #ifdef Game_pos_right
-        float irlsum = __a_r * analogRead(flame_a_2) + __b_r*analogRead(flame_a_3) + __c_r * analogRead(flame_a_4);
-        float irrsum = __d_r * analogRead(flame_b_2) + __e_r*analogRead(flame_b_3) + __f_r * analogRead(flame_b_4);
-        #endif
+        if(env_val == __left)
+        { irlsum = __a_l * analogRead(flame_a_2) + __b_l*analogRead(flame_a_3) + __c_l * analogRead(flame_a_4);
+          irrsum = __d_l * analogRead(flame_b_2) + __e_l*analogRead(flame_b_3) + __f_l * analogRead(flame_b_4);
+        }
+
+        else if(env_val == __right){
+           irlsum = __a_r * analogRead(flame_a_2) + __b_r*analogRead(flame_a_3) + __c_r * analogRead(flame_a_4);
+           irrsum = __d_r * analogRead(flame_b_2) + __e_r*analogRead(flame_b_3) + __f_r * analogRead(flame_b_4);
+        }
 
         ScreenData[5] = irlsum;
         ScreenData[6] = irrsum;
@@ -135,8 +141,15 @@ void step1(){ //找到灯塔并转向并归中找正
         // _seriaL.println(k);
         // _seriaL.println(irlsum);
         // //_seriaL.println()
-
-
+        int _r_sum,_l_sum;
+        if(env_val == __left){
+          _r_sum = _left_r_sum;
+          _l_sum = _left_l_sum;
+        }
+        else if(env_val ==__right){
+          _r_sum = _right_r_sum;
+          _l_sum = _right_l_sum;
+        }
         // //_seriaL.println(analogRead(flame_a_4));
 /******************判断电机状态****************************/
 
@@ -145,13 +158,11 @@ void step1(){ //找到灯塔并转向并归中找正
                 if (irrsum > irlsum) {   //判断左右
                         flag_zuoyou = _right;
 
-                #ifdef Game_pos_left
-                        if (irrsum > _left_r_sum) { //判断正对与否
-                #endif
 
-                #ifdef Game_pos_right
-                        if (irrsum > _right_r_sum) {
-                #endif
+                        if (irrsum > _r_sum) { //判断正对与否
+
+
+
                                 flag_turn = _turn;
                                 // //_seriaL.println("turn flag updated");
                         }
@@ -169,13 +180,9 @@ void step1(){ //找到灯塔并转向并归中找正
                 else if (irrsum < irlsum) {
                         flag_zuoyou = _left;
                         // //_seriaL.println("Left");
-                #ifdef Game_pos_left
-                        if (irlsum > _left_l_sum) {
-                #endif
 
-                #ifdef Game_pos_right
-                        if (irlsum > _right_l_sum) {
-                #endif
+                        if (irlsum > _l_sum) {
+
 
                                 flag_turn = _turn;
                                 // //_seriaL.println("turn flag updated");

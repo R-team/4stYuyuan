@@ -88,6 +88,7 @@
 
 /****************Extra******************/
 #define tonePin 52 //蜂鸣器
+#define envSwitch 47 //环境开关
 #define switchPin 53 //校准开关
 #define headswitchPin1  A13//触碰开关
 #define headswitchPin2  A14//另一个触碰开关
