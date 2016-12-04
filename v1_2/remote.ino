@@ -16,7 +16,7 @@
 PS2X ps2x;           // create PS2 Controller Class4
 Servo *servo[3]={new Servo(),new Servo(),new Servo()};//create the servo class
 
-int pos[3]={28,90,80};
+int pos[3]={28,15,80};
   int error = 0;
   byte type = 0;
   byte vibrate = 0;
@@ -85,8 +85,8 @@ int remote_work(){
         run_offset=0;
       }
 
-      pwm_L=2*(run_power-run_offset);
-      pwm_R=2*(run_power+run_offset);
+      pwm_L=1.8*(run_power-run_offset);
+      pwm_R=1.8*(run_power+run_offset);
       /*   Try 1 END*/
 
       if(abs(pwm_L)>MAXPWM){

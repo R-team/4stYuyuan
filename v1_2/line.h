@@ -4,23 +4,10 @@
 
 
 /****************蓝牙串口号**********/
-#define _seriaL Serial
+#define _seriaL Serial2
 #define _seriaL_compass Serial3 //罗盘对应
-/***************MPU6050************/
-#define IMU_INT_PIN 1 //IMU中断
-
-
-
-/*************** 编码器 *************/
-#define ENCODER_LF_A 20
-#define ENCODER_LF_B 42
-#define ENCODER_LB_A 2
-#define ENCODER_LB_B 44
-#define ENCODER_RF_A 21
-#define ENCODER_RF_B 43
-#define ENCODER_RB_A 19
-#define ENCODER_RB_B 45
-
+/***************环境开关************/
+#define envSwitch 47 //环境开关
 
 /**************电机****************/
 #define motor_lf_in1 34
@@ -46,7 +33,6 @@
 /************  舵机  ***************/
 #define servo0          8
 #define servo1         9
-// #define servo2         10
 
 /***********火焰传感器**************/
 #define flame_c_1 24 //s0 最低位
@@ -71,8 +57,17 @@
 /**************巡线******************/
 #define xunxian1 48
 #define xunxian2 49
-#define xunxian3 2 //弃用
+//#define xunxian3 2 //弃用
 #define xunxian4 51
+
+#define xunji0 2  //left
+#define xunji1 3
+#define xunji2 20
+#define xunji3 21  //right
+#define xunji4 22  //back_right
+#define xunji5 23
+
+
 /*******************颜色传感器********/
 #define S0     6   // Please notice the Pin's define
 #define S1     5
@@ -88,7 +83,8 @@
 
 /****************Extra******************/
 #define tonePin 52 //蜂鸣器
-#define envSwitch 47 //环境开关
 #define switchPin 53 //校准开关
 #define headswitchPin1  A13//触碰开关
 #define headswitchPin2  A14//另一个触碰开关
+#define huidu_f A0
+#define huidu_b A15

@@ -9,10 +9,10 @@
 */
 
 
-
-
 /**************决定比赛是左面还是右面***********************/
+
 #define Game_pos_left
+
 //#define Game_pos_right
 
 /*****************决定屏幕显示哪些内容*********************/
@@ -26,14 +26,7 @@
 
 /*****************决定各个阶段是否打印某些值****************/
 
-
-#define print_speed //pid中速度
-
-
 /******************Beacon各个阶段某些变量*****************/
-#define gray_blue
-
-
 #define _left_l_sum 1330     //左右灯塔阀值
 #define _left_r_sum 1660
 #define _right_l_sum 1320
@@ -52,3 +45,8 @@
 #define __d_r 0.3
 #define __e_r 1.3
 #define __f_r 0.3
+
+/*************** 色块灰度值  *********************/
+
+#define _huidu_red 160
+#define _huidu_blue 180

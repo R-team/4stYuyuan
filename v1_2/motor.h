@@ -15,10 +15,6 @@ void motor_l_work(int pwm);
 void motor_r_work(int pwm);
 void motor_stop();
 
-void motor_work(float setpoint[4]);
-void motor_work_set(int motor_pwm[4]);
-void motor_speed_cal(float setpoint[4]);
-
 //测试电机是否接线正确，正确表现为左右轮同时向前快走1s，慢走一秒
 //接着同时向后快走一秒，慢走一秒
 void motor_test();

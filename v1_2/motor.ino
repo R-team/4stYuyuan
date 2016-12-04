@@ -1,63 +1,6 @@
 #include <Arduino.h>
 
 #include "line.h"
-#include "PID_v1.h"
-#include "env_val.h"
-extern long int encoder_count[4];
-int motor_pwm[4];
-int setpoint[4];
-float Kp[4],Kd[4],Ki[4];
-
-
-long int pid_timer;
-
-void motor_speed_cal(float setpoint[4]){
-  if(millis() - pid_timer > 40){
-    static float speed_err[4],speed_intergal[4],speed_last_err[4];
-    for(int i = 0;i<4;i++){
-      speed_err[i] = encoder_count[i] - setpoint[i];
-      if(abs(speed_err[i] - speed_last_err[i]) < 4000)
-        motor_pwm[i] = Kp[i]*speed_err[i] + Ki[i]*speed_intergal[i] +Kd[i]*(speed_err[i] - speed_last_err[i]);
-      if(motor_pwm[i] > 255)motor_pwm[i] = 255;
-      else if(motor_pwm[i] < -255)motor_pwm[i] = -255;
-      
-      speed_last_err[i] = speed_err[i];
-
-
-
-    #ifdef print_speed
-    if(abs(speed_err[i] - speed_last_err[i]) < 4000){
-    _seriaL.print(abs(encoder_count[0]));
-    _seriaL.print(",");
-    _seriaL.print(abs(encoder_count[1]));
-    _seriaL.print(",");
-    _seriaL.print(abs(encoder_count[2]));
-    _seriaL.print(",");
-    _seriaL.println(abs(encoder_count[3]));}
-    #endif
-
-    for(int i = 0;i<4;i++){
-      encoder_count[i] = 0;
-    }
-    pid_timer = millis();
-  }
-}
-}
-
-
-void motor_work_set(int motor_pwm[4]){
-  motor_lf_work(motor_pwm[0]);
-  motor_lb_work(motor_pwm[1]);
-  motor_rf_work(motor_pwm[2]);
-  motor_rb_work(motor_pwm[3]);
-}
-
-void motor_work(float setpoint[4]){
-  motor_speed_cal(setpoint);
-  motor_work_set(motor_pwm);
-}
-
-
 
 //初始化电机，放setup里
 void motor_setup() {
@@ -76,8 +19,7 @@ void motor_setup() {
 }
 
 
-
-//运行函数,pwm:-255~255,正值正转，负值反转
+//运转函数,pwm:-255~255,正值正转，负值反转
 int motor_lf_work(int pwm) {
   if (pwm >= 0) {
     digitalWrite(motor_lf_in1, HIGH);
